@@ -9,18 +9,35 @@ import java.net.InetSocketAddress;
 import static java.lang.StringTemplate.STR;
 
 public class Server {
-    public static void main(String[] args) throws Exception {
-        final int port = 8000;
+    public static boolean connectionStatus = false;
+    private static int port = 8000;
+    private static String path = "/test";
+
+    public static void start() throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-        server.createContext("/chat", new MyHandler());
+        Handler handler = new Handler("Initial response");
+        server.createContext(path, handler);
         server.start();
         System.out.println(STR."Server started on port \{port}");
+        connectionStatus = true;
     }
 
-    static class MyHandler implements HttpHandler {
+    public boolean isConnected() {
+        return connectionStatus;
+    }
+
+    static class Handler implements HttpHandler {
+        private String response;
+        public Handler(String response) {
+            this.response = response;
+        }
+
+        public void setResponse(String response) {
+            this.response = response;
+        }
+
         @Override
         public void handle(HttpExchange t) throws IOException {
-            String response = "Test response";
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
