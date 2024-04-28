@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.lang.Thread;
 
-public class  Client {
+public class Client {
     private static int choice;
     static ArrayList<Account> accounts = new ArrayList<>();
     static boolean isLoggedIn = false;

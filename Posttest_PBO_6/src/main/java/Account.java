@@ -1,4 +1,4 @@
-public abstract class Account {
+public abstract class Account implements Validation {
     protected String username;
     protected String password;
 
@@ -6,8 +6,4 @@ public abstract class Account {
         this.username = username;
         this.password = password;
     }
-
-    public abstract String getUsername();
-
-    public abstract String getPassword();
 }
